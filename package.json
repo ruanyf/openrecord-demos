@@ -1,0 +1,16 @@
+{
+  "name": "openrecord-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openrecord": "^2.7.3",
+    "sqlite3": "^4.0.4"
+  }
+}
