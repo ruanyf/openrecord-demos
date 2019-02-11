@@ -1,26 +1,44 @@
-const Store = require('openrecord/store/sqlite3')
+const Store = require('openrecord/store/sqlite3');
 
 const store = new Store({
-  file: './sample.db'
-})
+  type: 'sqlite3',
+  file: './db/sample.db',
+  autoLoad: true,
+});
 
-class Employee extends Store.BaseModel{
+class Customer extends Store.BaseModel {
   static definition(){
-    this.validatesPresenceOf('FirstName', 'LastName')
+    this.validatesPresenceOf('FirstName', 'LastName');
+  }
+
+  getFullName(){
+    return this.FirstName + ' ' + this.LastName;
   }
 }
-store.Model(Employee)
 
-store.ready(async () => {
-  const employee = Employee.new();
-  employee.set({
-    FirstName: 'yifeng'
-  });
-  await employee.save();
-}).then(() => {
-  console.log('执行完成');
-  process.exit(0);
-}).catch(e => {
-  console.log('发生错误', e)
-  process.exit(1);
-});
+store.Model(Customer);
+
+async function openDB() {
+  await store.connect();
+  await store.ready();
+  console.log('connected');
+}
+
+async function operateDB() {
+  const customer = await Customer.where({Company: 'Apple Inc.'}).first();
+  console.log(customer.getFullName());
+}
+
+async function closeDB() {
+  await store.close();
+  console.log('closed');
+}
+
+async function main() {
+  await openDB();
+  await operateDB();
+  await closeDB();
+}
+
+main();
+

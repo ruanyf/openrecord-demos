@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "openrecord": "^2.7.3",
-    "sqlite3": "^4.0.4"
+    "openrecord": "^2.8.4",
+    "sqlite3": "^4.0.6"
   }
 }
