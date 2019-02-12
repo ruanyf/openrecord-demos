@@ -4,30 +4,46 @@ const store = new Store({
   file: './sample.db'
 })
 
-class Album extends Store.BaseModel{
+class Track extends Store.BaseModel{
   static definition() {
-    this.attribute('AlbumId', 'integer', { primary: true })
-    this.attribute('Title', 'string');
-    this.attribute('ArtistId', 'integer');
-    this.belongsTo('artist', { model: 'artist', from: 'ArtistId' })
-  }
-}
-
-class Artist extends Store.BaseModel{
-  static definition(){
-    this.attribute('ArtistId', 'integer', { primary: true })
+    this.attribute('TrackId', 'integer', { primary: true })
     this.attribute('Name', 'string');
-    this.hasOne('album', { model: 'Album', to: 'ArtistId' })
+    this.attribute('Composer', 'string');
+    this.attribute('Milliseconds', 'integer');
+    this.attribute('Bytes', 'integer');
+    this.attribute('UnitPrice', 'float');
+    this.hasMany('track_playlists', { model: 'PlaylistTrack', from: 'TrackId', to: 'TrackId'});
+    this.hasMany('playlists', { model: 'Playlist', through: 'track_playlists' });
   }
 }
 
-store.Model(Album);
-store.Model(Artist);
+class Playlist extends Store.BaseModel{
+  static definition(){
+    this.attribute('PlaylistId', 'integer', { primary: true })
+    this.attribute('Name', 'string');
+    this.hasMany('playlist_tracks', { model: 'PlaylistTrack', from: 'PlaylistId', to: 'PlaylistId' });
+    this.hasMany('tracks', { model : 'Track', through: 'playlist_tracks' });
+  }
+}
+
+class PlaylistTrack extends Store.BaseModel{
+  static definition(){
+    this.tableName = 'playlist_track';
+    this.attribute('PlaylistId', 'integer');
+    this.attribute('TrackId', 'integer');
+    this.belongsTo('playlists', { model: 'Playlist', from: 'PlaylistId' });
+    this.belongsTo('tracks', { model: 'Track', from: 'TrackId' });
+  }
+}
+
+store.Model(Track);
+store.Model(Playlist);
+store.Model(PlaylistTrack);
 
 store.ready(async () => {
-  const artist = await Artist.find(1)
-  await artist.include('album');
-  console.log((await artist.album).Title)
+  const track = await Track.find(1)
+  await track.include('playlists');
+  console.log((await track.playlists))
   // const album = await Album.where({ AlbumId: 1 }).find(1);
   // await album.include('artist');
   // console.log((await album.artist).Name);

@@ -8,6 +8,9 @@ const store = new Store({
 
 class Customer extends Store.BaseModel {
   static definition(){
+    this.attribute('CustomerId', 'integer', { primary: true });
+    this.attribute('FirstName', 'string');
+    this.attribute('LastName', 'string');
     this.validatesPresenceOf('FirstName', 'LastName');
   }
 

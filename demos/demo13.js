@@ -9,8 +9,6 @@ const store = new Store({
 class Customer extends Store.BaseModel {
   static definition(){
     this.attribute('CustomerId', 'integer', { primary: true });
-    this.attribute('FirstName', 'string');
-    this.attribute('LastName', 'string');
     this.validatesPresenceOf('FirstName', 'LastName');
   }
 
@@ -28,8 +26,11 @@ async function openDB() {
 }
 
 async function operateDB() {
-  const customer = await Customer.where({Company: 'Apple Inc.'}).first();
-  console.log(customer.getFullName());
+  const customer = await Customer.find(60);
+  await customer.update({
+    Address: 'Whitehouse'
+  });
+  console.log(customer.Address);
 }
 
 async function closeDB() {

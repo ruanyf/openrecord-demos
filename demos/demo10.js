@@ -1,24 +1,63 @@
-const Store = require('openrecord/store/sqlite3')
+const Store = require('openrecord/store/sqlite3');
 
 const store = new Store({
-  file: './sample.db'
-})
+  type: 'sqlite3',
+  file: './db/sample.db',
+  autoLoad: true,
+});
 
-class Employee extends Store.BaseModel{
+class Track extends Store.BaseModel{
   static definition() {
-    this.getter('fullname', function () {return this.FirstName + ' ' + this.LastName});
-  }
-
-  FullName(){
-    return this.FirstName + ' ' + this.LastName
+    this.attribute('TrackId', 'integer', { primary: true })
+    this.hasMany('track_playlists', { model: 'PlaylistTrack', from: 'TrackId', to: 'TrackId'});
+    this.hasMany('playlists', { model: 'Playlist', through: 'track_playlists' });
   }
 }
-store.Model(Employee)
 
-store.ready(async () => {
-  const employee = await Employee.find(1)
-  console.log(employee.fullname)
-}).then(() => {
-  console.log('执行完成');
-  process.exit(0);
-});
+class Playlist extends Store.BaseModel{
+  static definition(){
+    this.attribute('PlaylistId', 'integer', { primary: true })
+    this.hasMany('playlist_tracks', { model: 'PlaylistTrack', from: 'PlaylistId', to: 'PlaylistId' });
+    this.hasMany('tracks', { model : 'Track', through: 'playlist_tracks' });
+  }
+}
+
+class PlaylistTrack extends Store.BaseModel{
+  static definition(){
+    this.tableName = 'playlist_track';
+    this.attribute('PlaylistId', 'integer');
+    this.attribute('TrackId', 'integer');
+    this.belongsTo('playlists', { model: 'Playlist', from: 'PlaylistId', to: 'PlaylistId'});
+    this.belongsTo('tracks', { model: 'Track', from: 'TrackId', to: 'TrackId'});
+  }
+}
+
+store.Model(Track);
+store.Model(Playlist);
+store.Model(PlaylistTrack);
+
+async function openDB() {
+  await store.connect();
+  await store.ready();
+  console.log('connected');
+}
+
+async function operateDB() {
+  const track = await Track.find(1).include('playlists');
+  const playlists = await track.playlists;
+  playlists.forEach(l => console.log(l.PlaylistId));
+}
+
+async function closeDB() {
+  await store.close();
+  console.log('closed');
+}
+
+async function main() {
+  await openDB();
+  await operateDB();
+  await closeDB();
+}
+
+main();
+
