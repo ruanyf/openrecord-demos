@@ -1,7 +1,7 @@
 {
   "name": "openrecord-demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "an ORM tutorial for nodejs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

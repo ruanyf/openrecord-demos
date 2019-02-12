@@ -1,26 +1,48 @@
-## Install
+This repo is an ORM tutorial for nodejs. It uses [OpenRecord](https://github.com/PhilWaldmann/openrecord) as a lightweight ORM library which is like ActiveRecord for Ruby.
+
+## How to use
+
+First, clone the repo
 
 ```bash
-$ npm install --save openrecord
+$ git clone git@gitlab.com:ruanyf/openrecord-demos.git
 ```
 
-Since our demo database is sqlite, you also need install sqlite3.
+Then install the dependencies.
 
 ```bash
-$ npm i openrecord sqlite3
+$ cd openrecord-demos
+$ npm install
 ```
 
 ## Database
 
-Demo database is copied from http://www.sqlitetutorial.net/sqlite-sample-database/ .
-
-Get its schema image (PDF)[here](http://www.sqlitetutorial.net/wp-content/uploads/2018/03/sqlite-sample-database-diagram-color.pdf).
+Our demo sqlite database is copied from http://www.sqlitetutorial.net/sqlite-sample-database/ .
 
 ![](./db/schema.jpg)
 
-## Demo01: Connect database
+Get its schema image (PDF)[here](http://www.sqlitetutorial.net/wp-content/uploads/2018/03/sqlite-sample-database-diagram-color.pdf).
 
-First, you set up the OpenRecord to tell it which type of DB you want to connect.
+## Index
+
+- Demo01: connect database
+- Demo02: create models
+- Demo03: define models
+- Demo04: get a single record
+- Demo05: get multiple records
+- Demo06: `limit()` and `offset()`
+- Demo07: conditions
+- Demo08: one-to-many relation
+- Demo09: many-to-one relation
+- Demo10：many-to-many relation
+- Demo11: setter and getter
+- Demo12: create a record
+- Demo13: update a record
+- Demo14: remove a record
+
+## Demo01: connect database
+
+First, setup OpenRecord. Tell it which DB to connect.
 
 ```javascript
 const Store = require('openrecord/store/sqlite3');
@@ -32,7 +54,7 @@ const store = new Store({
 });
 ```
 
-Second, open connection, do some operations and close it.
+Second, open the database, do some operations and close it.
 
 ```javascript
 async function openDB() {
@@ -69,11 +91,9 @@ executed
 closed
 ```
 
-## Demo02: Create models
+## Demo02: create models
 
-Now you should tell OpenRecord your model.
-
-We create a model of Customer.
+Create a model (M in MVC) which corresponds to a table in database.
 
 ```javascript
 class Customer extends Store.BaseModel {
@@ -102,7 +122,7 @@ closed
 
 ## Demo03: define models
 
-You could define your model, e.g. specify given field's value to be not null, specify field types and create new instance method.
+Give some details about your model, e.g. specify given field's value to be not null, specify field types and create new instance method.
 
 ```javascript
 class Customer extends Store.BaseModel {
@@ -137,14 +157,14 @@ closed
 
 ## Demo04: get a single record
 
-You could use `find(id)` or `get(id)` to get a single record. If OpenRecord cann't find data for the given id, `find(id)` will return `null`，and `get(id)` will throw an Error.
+Use `find(id)` or `get(id)` method to get a single record. If OpenRecord cann't find data for the given id, `find(id)` will return `null`，and `get(id)` will throw an Error.
 
 ```javascript
 // demo02
 const customer = await Customer.find(1);
 ```
 
-To get a single record by non primary key use `where()` together with `first()`.
+Get a single record by non primary key use `where()` together with `first()`.
 
 ```javascript
 // demo04
@@ -187,7 +207,7 @@ closed
 
 ## Demo06: `limit()` and `offset()`
 
-If you want to get all records, you simply do the following.
+If you want to get all records, simply do the following.
 
 ```javascript
 const customers = await Customer;
@@ -222,7 +242,7 @@ closed
 
 ## Demo07: conditions
 
-If you want to filter the records, use `where()` method.
+To filter the records, use `where()` method.
 
 ```javascript
 User.where({login: ['phil', 'michl']}) // login IN ('phil', 'michl')
@@ -239,7 +259,7 @@ User.where({failed_logins_lte: 10}) // failed_logins <= 10
 User.where({failed_logins_between: [5, 8]}) // failed_logins between 5 and 8
 ```
 
-For example, you want to filter the users whose email use `gmail.com`.
+For example, filter the users whose email uses `gmail.com`.
 
 ```javascript
 async function operateDB() {
@@ -266,7 +286,7 @@ closed
 
 ## Demo08: one-to-many relation
 
-If you want to join tables in database, you should tell OpenRecord the relations between tables.
+To join tables in database, you should tell OpenRecord the relations between tables.
 
 There are three kinds of relation.
 
@@ -327,7 +347,7 @@ closed
 
 ## Demo09: many-to-one relation
 
-many-to-one relation is the opposite of one-to-many relation. You don't have to change the model, and editing the query is enough.
+Many-to-one relation is the opposite of one-to-many relation. You don't have to change the model, and editing the query is enough.
 
 ```javascript
 // demo09.js
@@ -431,7 +451,7 @@ connected
 closed
 ```
 
-## demo12: create a record
+## Demo12: create a record
 
 To create a new record you could use `create()` method.
 
@@ -455,7 +475,7 @@ connected
 closed
 ```
 
-## demo13: update a record
+## Demo13: update a record
 
 `update()` method set the record and also save it.
 
@@ -477,7 +497,7 @@ Whitehouse
 closed
 ```
 
-## demo14: remove a record
+## Demo14: remove a record
 
 `destroy()` method is used to remove a record from your datastore.
 
