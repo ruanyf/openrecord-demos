@@ -33,7 +33,7 @@ Get its schema image (PDF)[here](http://www.sqlitetutorial.net/wp-content/upload
 - [Demo06: `limit()` and `offset()`](#demo06-limit-and-offset)
 - [Demo07: conditions](#demo07-conditions)
 - [Demo08: one-to-many relation](#demo08-one-to-many-relation)
-- [Demo09: many-to-one relation](#demo09-many-to-ony-relation)
+- [Demo09: many-to-one relation](#demo09-many-to-one-relation)
 - [Demo10：many-to-many relation](#demo10-many-to-many-relation)
 - [Demo11: setter and getter](#demo11-setter-and-getter)
 - [Demo12: create a record](#demo12-create-a-record)
@@ -371,7 +371,7 @@ connected
 closed
 ```
 
-## Demo10：many-to-many relation
+## Demo10: many-to-many relation
 
 The relation between `Track` and `Playlist` is many-to-many: a track belongs to many playlists and a playlist has many tracks.
 
