@@ -5,7 +5,7 @@ This repo is an ORM tutorial for nodejs. It uses [OpenRecord](https://github.com
 First, clone the repo
 
 ```bash
-$ git clone git@gitlab.com:ruanyf/openrecord-demos.git
+$ git clone https://github.com/ruanyf/openrecord-demos.git 
 ```
 
 Then install the dependencies.
@@ -25,20 +25,20 @@ Get its schema image (PDF)[here](http://www.sqlitetutorial.net/wp-content/upload
 
 ## Index
 
-- Demo01: connect database
-- Demo02: create models
-- Demo03: define models
-- Demo04: get a single record
-- Demo05: get multiple records
-- Demo06: `limit()` and `offset()`
-- Demo07: conditions
-- Demo08: one-to-many relation
-- Demo09: many-to-one relation
-- Demo10：many-to-many relation
-- Demo11: setter and getter
-- Demo12: create a record
-- Demo13: update a record
-- Demo14: remove a record
+- [Demo01: connect database](#demo01-connect-database)
+- [Demo02: create models](#demo02-create-models)
+- [Demo03: define models](#demo03-define-models)
+- [Demo04: get a single record](#demo04-get-a-single-record)
+- [Demo05: get multiple records](#demo05-get-multiple-records)
+- [Demo06: `limit()` and `offset()`](#demo06-limit-and-offset)
+- [Demo07: conditions](#demo07-conditions)
+- [Demo08: one-to-many relation](#demo08-one-to-many-relation)
+- [Demo09: many-to-one relation](#demo09-many-to-ony-relation)
+- [Demo10：many-to-many relation](#demo10-many-to-many-relation)
+- [Demo11: setter and getter](#demo11-setter-and-getter)
+- [Demo12: create a record](#demo12-create-a-record)
+- [Demo13: update a record](#demo13-update-a-record)
+- [Demo14: remove a record](#demo14-remove-a-record)
 
 ## Demo01: connect database
 
