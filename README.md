@@ -321,7 +321,7 @@ The following is copied from OpenRecord's document.
 
 > The `name` of the relation is a string and could be anything you like.
 >
-> The options parameter is optional, if it can autodetect your target model. Otherwise you need to privide an object with the following config options:
+> The options parameter is optional, if it can autodetect your target model. Otherwise you need to provide an object with the following config options:
 >
 > - model: The target model name as a string
 > - from: The name of the field of the current model
